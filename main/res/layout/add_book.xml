@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+
+
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="335dp"
+        android:layout_height="540dp"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:weightSum="1"
+        android:touchscreenBlocksFocus="false"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Book"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.07"
+            style="@style/Base.DialogWindowTitle.AppCompat"
+            android:autoText="true"
+            android:textSize="@dimen/abc_text_size_title_material_toolbar" />
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="53dp"
+            android:layout_marginBottom="10dp"
+            android:background="#6ac86a"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColorHint="#ffffff"
+            android:alpha="10"
+            android:textIsSelectable="false"
+            android:hint="Book Name"
+            android:password="false"
+            android:drawablePadding="10dp"
+            android:autoText="false" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:layout_marginBottom="10dp"
+            android:background="#6ac86a"
+            android:ems="10"
+            android:id="@+id/author"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColorHint="#ffffff"
+            android:alpha="10"
+            android:textIsSelectable="false"
+            android:layout_gravity="right"
+            android:hint="Location"
+            android:gravity="top"
+            android:drawablePadding="10dp"
+            />
+
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="#6ac86a"
+            android:ems="10"
+            android:id="@+id/price"
+            android:padding="10dp"
+            android:singleLine="false"
+            android:textColorHint="#ffffff"
+            android:alpha="10"
+            android:textIsSelectable="false"
+            android:layout_gravity="right"
+            android:hint="price"
+            android:gravity="left|top"
+            android:inputType="textMultiLine"
+            android:maxLength="150"
+            android:drawablePadding="10dp"
+            />
+
+        <EditText
+            android:layout_width="306dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="#6ac86a"
+            android:ems="10"
+            android:id="@+id/stock"
+            android:padding="10dp"
+            android:singleLine="false"
+            android:textColorHint="#ffffff"
+            android:alpha="10"
+            android:textIsSelectable="false"
+            android:hint="Stock "
+            android:gravity="left|top"
+            android:inputType="textMultiLine"
+            android:maxLength="150"
+            android:drawablePadding="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="0.07">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fiction"
+                android:id="@+id/radioButton2"
+                android:checked="false"
+                android:layout_weight="0.07" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="History"
+                android:id="@+id/radioButton3"
+                android:checked="false"
+                android:layout_weight="0.07" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Romance"
+                android:id="@+id/radioButton"
+                android:checked="false"
+                android:layout_weight="0.07"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="#6ac86a"
+            android:ems="10"
+            android:id="@+id/desc"
+            android:padding="10dp"
+            android:singleLine="false"
+            android:textColorHint="#ffffff"
+            android:alpha="10"
+            android:textIsSelectable="false"
+            android:hint="Description"
+            android:gravity="left|top"
+            android:inputType="textMultiLine"
+            android:maxLength="150"
+            android:drawablePadding="10dp"
+            android:layout_gravity="right"
+            android:layout_weight="0.21" />
+
+        <Button
+            android:id="@+id/btnOffer"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:background="#ea4c88"
+            android:text="Add Book"
+            android:layout_gravity="center_horizontal" />
+
+        <RadioGroup
+            android:id="@+id/radioSex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+        </RadioGroup>
+        <!-- Login Button -->
+
+        <!-- Link to Login Screen -->
+
+    </LinearLayout>
+
+</LinearLayout>
