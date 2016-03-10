@@ -19,15 +19,25 @@ public class AdminSide extends Activity {
 
        Button button = (Button) findViewById(R.id.add);
 
+        Button view = (Button) findViewById(R.id.view);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(AdminSide.this, AddBook.class);
-//                finish();
-//                startActivity(intent);
-                BookFunctions a = new BookFunctions();
-                a.addBook("testbitch");
+               Intent intent = new Intent(AdminSide.this, AddBook.class);
+               finish();
+               startActivity(intent);
+
+            }
+        });
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminSide.this, ViewBooks.class);
+                finish();
+                startActivity(intent);
+
             }
         });
 

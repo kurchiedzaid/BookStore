@@ -42,7 +42,7 @@
                 android:visibility="invisible" />
 
             <Button
-                android:id="@+id/books"
+                android:id="@+id/view"
                 android:drawableTop="@drawable/user"
                 android:onClick="onButtonClicker"
                 android:text="View Books"

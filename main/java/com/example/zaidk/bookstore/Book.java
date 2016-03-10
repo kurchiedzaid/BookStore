@@ -6,11 +6,11 @@ package com.example.zaidk.bookstore;
 public abstract class Book {
 
         public final void performAction(){
-            addBook(null);
+            addBook(null,null,null,null,null);
             updateStock();
             alert();
         }
-        public abstract void addBook(String name);
+        public abstract void addBook(String name,String author, String price,String stock,String desc);
         public abstract void updateStock();
         public abstract void alert();
 

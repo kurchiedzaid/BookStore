@@ -18,12 +18,21 @@ import java.util.ArrayList;
  * template
  */
 public class BookFunctions extends Book {
-    String name;
+    String title;
+    String author;
+    String price;
+    String stock;
+    String desc;
 
-    public void addBook(String names) {
+    public void addBook(String namelv, String authorlv, String pricelv,String stocklv,String desclv) {
+
+        title=namelv;
+        author=authorlv;
+        price=pricelv;
+        stock=stocklv;
+        desc=desclv;
         new SummaryAsyncTask().execute((Void) null);
 
-          name=names;
         System.out.println("book is being added...");
 
         }
@@ -37,16 +46,19 @@ public class BookFunctions extends Book {
     class SummaryAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
         //  private void postData(String offerName,String offerType,String offerLocation,String offerDescription,String businessId,String businessEmail,String business_phone,String views) {
-        private void postData(String offerName) {
+        private void postData(String title,String author, String price, String stock, String desc) {
+            System.out.println("book is being added inside" +price+author+title);
 
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://10.0.2.2/info/customersReg.php");
+            HttpPost httppost = new HttpPost("http://10.0.2.2/info/addBook.php");
 
             try {
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
-                nameValuePairs.add(new BasicNameValuePair("name",offerName));
-
-
+                nameValuePairs.add(new BasicNameValuePair("title",title));
+                nameValuePairs.add(new BasicNameValuePair("price",price));
+                nameValuePairs.add(new BasicNameValuePair("stock",stock));
+                nameValuePairs.add(new BasicNameValuePair("author",author));
+                nameValuePairs.add(new BasicNameValuePair("description",desc));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 HttpResponse response = httpclient.execute(httppost);
@@ -60,8 +72,9 @@ public class BookFunctions extends Book {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            postData(name);
+            postData(title,author,price,stock,desc);
 
+            System.out.println("book is being added..." +price+author+title);
 
             return null;
 
