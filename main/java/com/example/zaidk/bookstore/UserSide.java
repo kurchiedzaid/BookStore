@@ -31,28 +31,25 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
- * Created by zaidkurchied on 10/03/2016.
+ * Created by zaidkurchied on 12/03/2016.
  */
-public class ViewBooks extends Activity {
+public class UserSide extends Activity {
     String myJSON;
 
     private static final String TAG_RESULTS = "result";
     private static final String TAG_ID = "id";
     private static final String TAG_NAME = "title";
     private static final String TAG_AUTHOR = "author";
-        private static final String TAG_PRICE = "price";
+    private static final String TAG_PRICE = "price";
     private static final String TAG_STOCK = "stock";
     private static final String TAG_DESCRIPTION = "description";
     private static final String TAG_TYPE= "type";
 
-ImageButton sort;
+    ImageButton sort;
 
     public String email="zaid";
     JSONArray offers = null;
@@ -65,7 +62,7 @@ ImageButton sort;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_books);
+        setContentView(R.layout.user_side_activ);
         //   txt = (TextView) findViewById(R.id.log);
         loadActivity();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -90,9 +87,9 @@ ImageButton sort;
 
                         String postfix = ip.conversion(value);
 //
-                         System.out.println("Infix:   " + postfix);
+                        System.out.println("Infix:   " + postfix);
 //                        System.out.println("Postfix: " + postfix);
-                        Intent intent = new Intent(ViewBooks.this, SearchDatabase.class);
+                        Intent intent = new Intent(UserSide.this, UserSideSearch.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("value", postfix);
                         startActivity(intent);
@@ -114,7 +111,7 @@ ImageButton sort;
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(ViewBooks.this, sort);
+                PopupMenu popup = new PopupMenu(UserSide.this, sort);
                 //Insflating the Popup using xml file
                 popup.getMenuInflater()
                         .inflate(R.menu.menu_main, popup.getMenu());
@@ -123,14 +120,15 @@ ImageButton sort;
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         Toast.makeText(
-                                ViewBooks.this,
+                                UserSide.this,
                                 "You Clicked : " + item.getTitle(),
                                 Toast.LENGTH_SHORT
                         ).show();
 
                         if (item.getTitle().equals("Recently added")) {
-                            Intent intent = new Intent(ViewBooks.this, RecentlyAdded.class);
+                            Intent intent = new Intent(UserSide.this, UserSideSearch.class);
                             intent.putExtra("type", "recent");
+                            intent.putExtra("activity", "userSide");
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
@@ -139,8 +137,9 @@ ImageButton sort;
 
 
                         if (item.getTitle().equals("Fiction")) {
-                            Intent intent = new Intent(ViewBooks.this, RecentlyAdded.class);
+                            Intent intent = new Intent(UserSide.this, UserSideSearch.class);
                             intent.putExtra("type", "fiction");
+                            intent.putExtra("activity",  "userSide");
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
@@ -148,16 +147,18 @@ ImageButton sort;
                         }
 
                         if (item.getTitle().equals("History")) {
-                            Intent intent = new Intent(ViewBooks.this, RecentlyAdded.class);
+                            Intent intent = new Intent(UserSide.this, UserSideSearch.class);
                             intent.putExtra("type", "history");
+                            intent.putExtra("activity",  "userSide");
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                             finish();
                         }
                         if (item.getTitle().equals("Romance")) {
-                            Intent intent = new Intent(ViewBooks.this, RecentlyAdded.class);
+                            Intent intent = new Intent(UserSide.this, UserSideSearch.class);
                             intent.putExtra("type", "romance");
+                            intent.putExtra("activity",  "userSide");
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
@@ -196,70 +197,70 @@ ImageButton sort;
 
 
 
-                    HashMap<String, String> persons = new HashMap<String, String>();
-                    persons.put(TAG_ID, id);
-                    persons.put(TAG_NAME, name);
-                    persons.put(TAG_AUTHOR, author);
-                    persons.put(TAG_DESCRIPTION, description);
-                    persons.put(TAG_PRICE, price);
-                    persons.put(TAG_STOCK, stock);
-                    persons.put(TAG_TYPE, type);
+                HashMap<String, String> persons = new HashMap<String, String>();
+                persons.put(TAG_ID, id);
+                persons.put(TAG_NAME, name);
+                persons.put(TAG_AUTHOR, author);
+                persons.put(TAG_DESCRIPTION, description);
+                persons.put(TAG_PRICE, price);
+                persons.put(TAG_STOCK, stock);
+                persons.put(TAG_TYPE, type);
 
 
-                    //    persons.put(TAG_DATE,d);
+                //    persons.put(TAG_DATE,d);
 
 
-                    offersList.add(persons);
+                offersList.add(persons);
+
+
+            }
+            ListAdapter adapter = new SimpleAdapter(
+                    UserSide.this, offersList, R.layout.book_list_item,
+                    new String[]{
+                            TAG_DESCRIPTION,
+                            TAG_NAME,
+                            TAG_PRICE,
+                            TAG_AUTHOR,
+                    },
+                    new int[]{
+                            R.id.author, R.id.title, R.id.type,R.id.author
+                    }
+            );
+
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                    Map<String, String> map = offersList.get(position);
+                    String link = map.get("id");
+                    String title = map.get("title");
+                    String author = map.get("author");
+                    String description = map.get("description");
+                    String stock = map.get("stock");
+                    String price = map.get("price");
+                    String type = map.get("type");
+
+
+                    String businessId = map.get("restaurant_id");
+
+                    Toast.makeText(getApplicationContext(),
+                            " " + title + " Clicked", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(UserSide.this, Book_Details_customer.class);
+                    intent.putExtra("id", link);
+                    intent.putExtra("name", title);
+                    intent.putExtra("author", author);
+                    intent.putExtra("description", description);
+                    intent.putExtra("stock", stock);
+                    intent.putExtra("price", price);
+                    intent.putExtra("type", type);
+
+                    finish();
+                    startActivity(intent);
 
 
                 }
-                    ListAdapter adapter = new SimpleAdapter(
-                            ViewBooks.this, offersList, R.layout.book_list_item,
-                            new String[]{
-                                    TAG_DESCRIPTION,
-                                    TAG_NAME,
-                                    TAG_PRICE,
-                                    TAG_AUTHOR,
-                            },
-                            new int[]{
-                                    R.id.author, R.id.title, R.id.type,R.id.author
-                            }
-                    );
+            });
 
-                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-                            Map<String, String> map = offersList.get(position);
-                            String link = map.get("id");
-                            String title = map.get("title");
-                            String author = map.get("author");
-                            String description = map.get("description");
-                            String stock = map.get("stock");
-                            String price = map.get("price");
-                            String type = map.get("type");
-
-
-                            String businessId = map.get("restaurant_id");
-
-                            Toast.makeText(getApplicationContext(),
-                                    " " + title + " Clicked", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(ViewBooks.this, BookDetails.class);
-                            intent.putExtra("id", link);
-                            intent.putExtra("name", title);
-                            intent.putExtra("author", author);
-                            intent.putExtra("description", description);
-                            intent.putExtra("stock", stock);
-                            intent.putExtra("price", price);
-                            intent.putExtra("type", type);
-
-                            finish();
-                            startActivity(intent);
-
-
-                        }
-                    });
-
-                    list.setAdapter(adapter);
+            list.setAdapter(adapter);
 
 
             // list.setAdapter(adapter);
@@ -368,8 +369,8 @@ ImageButton sort;
 
     @Override
     public void onBackPressed() {
-
-        Intent intent = new Intent(ViewBooks.this,AdminSide.class);
+          Intent intent = new Intent(UserSide.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }

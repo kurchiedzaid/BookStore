@@ -55,7 +55,24 @@
                 android:layout_marginRight="25dp"
                 android:layout_marginEnd="25dp" />
 
+
         </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:layout_gravity="right"
+            android:visibility="invisible"
+            android:paddingLeft="5dp" />
+        <ImageButton android:id="@+id/cart"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/cart"
+            android:layout_centerVertical="true"
+            android:layout_alignRight="@+id/editSearch"
+            android:layout_alignEnd="@+id/editSearch"
+            android:layout_marginRight="25dp"
+            android:layout_marginEnd="25dp" />
     </android.support.v7.widget.Toolbar>
 
 
@@ -77,19 +94,13 @@
             android:layout_gravity="right"
             android:visibility="invisible" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"></LinearLayout>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/textView3"
             android:layout_gravity="center_horizontal" />
+
 
         <ListView
             android:layout_width="402dp"

@@ -12,5 +12,11 @@ public class Context {
 
     public String executeStrategy(String num1, String num2){
         return strategy.doOperation(num1, num2);
+
     }
+    public String executeStrategy2(String num1, String num2){
+        return strategy.doOperationCheckString(num1, num2);
+
+    }
+
 }

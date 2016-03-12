@@ -30,33 +30,36 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
- * Created by zaidkurchied on 10/03/2016.
+ * Created by zaidkurchied on 11/03/2016.
  */
-public class ViewBooks extends Activity {
+public class RecentlyAdded  extends Activity{
     String myJSON;
 
     private static final String TAG_RESULTS = "result";
     private static final String TAG_ID = "id";
     private static final String TAG_NAME = "title";
     private static final String TAG_AUTHOR = "author";
-        private static final String TAG_PRICE = "price";
+    private static final String TAG_PRICE = "price";
     private static final String TAG_STOCK = "stock";
     private static final String TAG_DESCRIPTION = "description";
     private static final String TAG_TYPE= "type";
+    private static final String TAG_DATE ="dateAdded";
 
-ImageButton sort;
+    ImageButton sort;
 
     public String email="zaid";
-    JSONArray offers = null;
-    ArrayList<HashMap<String, String>> offersList;
+    JSONArray books = null;
+    ArrayList<HashMap<String, String>> booksList;
     TextView txt;
     ListView list;
     String phone;
@@ -90,9 +93,9 @@ ImageButton sort;
 
                         String postfix = ip.conversion(value);
 //
-                         System.out.println("Infix:   " + postfix);
+                        System.out.println("Infix:   " + postfix);
 //                        System.out.println("Postfix: " + postfix);
-                        Intent intent = new Intent(ViewBooks.this, SearchDatabase.class);
+                        Intent intent = new Intent(RecentlyAdded.this, SearchDatabase.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("value", postfix);
                         startActivity(intent);
@@ -104,7 +107,7 @@ ImageButton sort;
     private void loadActivity() {
         // Do all of your work here
         list = (ListView) findViewById(R.id.listView);
-        offersList = new ArrayList<HashMap<String, String>>();
+        booksList = new ArrayList<HashMap<String, String>>();
         getData(); //get business email
 
 
@@ -114,7 +117,7 @@ ImageButton sort;
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(ViewBooks.this, sort);
+                PopupMenu popup = new PopupMenu(RecentlyAdded.this, sort);
                 //Insflating the Popup using xml file
                 popup.getMenuInflater()
                         .inflate(R.menu.menu_main, popup.getMenu());
@@ -123,13 +126,14 @@ ImageButton sort;
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         Toast.makeText(
-                                ViewBooks.this,
+                                RecentlyAdded.this,
                                 "You Clicked : " + item.getTitle(),
                                 Toast.LENGTH_SHORT
                         ).show();
 
+
                         if (item.getTitle().equals("Recently added")) {
-                            Intent intent = new Intent(ViewBooks.this, RecentlyAdded.class);
+                            Intent intent = new Intent(RecentlyAdded.this, RecentlyAdded.class);
                             intent.putExtra("type", "recent");
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -139,7 +143,7 @@ ImageButton sort;
 
 
                         if (item.getTitle().equals("Fiction")) {
-                            Intent intent = new Intent(ViewBooks.this, RecentlyAdded.class);
+                            Intent intent = new Intent(RecentlyAdded.this, RecentlyAdded.class);
                             intent.putExtra("type", "fiction");
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -148,7 +152,7 @@ ImageButton sort;
                         }
 
                         if (item.getTitle().equals("History")) {
-                            Intent intent = new Intent(ViewBooks.this, RecentlyAdded.class);
+                            Intent intent = new Intent(RecentlyAdded.this, RecentlyAdded.class);
                             intent.putExtra("type", "history");
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -156,7 +160,7 @@ ImageButton sort;
                             finish();
                         }
                         if (item.getTitle().equals("Romance")) {
-                            Intent intent = new Intent(ViewBooks.this, RecentlyAdded.class);
+                            Intent intent = new Intent(RecentlyAdded.this, RecentlyAdded.class);
                             intent.putExtra("type", "romance");
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -177,14 +181,14 @@ ImageButton sort;
     }
 
 
-    protected void showList() {
+    protected void showList() throws ParseException {
 
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
-            offers = jsonObj.getJSONArray(TAG_RESULTS);
+            books = jsonObj.getJSONArray(TAG_RESULTS);
 
-            for (int i = 0; i < offers.length(); i++) {
-                JSONObject c = offers.getJSONObject(i);
+            for (int i = 0; i < books.length(); i++) {
+                JSONObject c = books.getJSONObject(i);
                 String id = c.getString(TAG_ID);
                 String name = c.getString(TAG_NAME);
                 String author = c.getString(TAG_AUTHOR);
@@ -192,8 +196,30 @@ ImageButton sort;
                 String price = c.getString(TAG_PRICE);
                 String stock = c.getString(TAG_STOCK);
                 String type = c.getString(TAG_TYPE);
+                String date = c.getString(TAG_DATE);
 
 
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date date1 = formatter.parse(date);
+                System.out.println(date1);
+                System.out.println(formatter.format(date1));
+
+                //   String  date = c.getString(TAG_DATE);
+
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                //get current date time with Date()
+                Date today = new Date();
+                System.out.println(dateFormat.format(today));
+
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(today);
+                cal.add(Calendar.DATE, -30);
+                Date dateBefore30Days = cal.getTime();
+                System.out.println(dateBefore30Days);
+                String types = getIntent().getExtras().getString("type");
+
+                if ( date1.after(dateBefore30Days) || types!=null && types.equalsIgnoreCase(type)) {
 
 
                     HashMap<String, String> persons = new HashMap<String, String>();
@@ -209,57 +235,57 @@ ImageButton sort;
                     //    persons.put(TAG_DATE,d);
 
 
-                    offersList.add(persons);
+                    booksList.add(persons);
+
+                }
+            }
+            ListAdapter adapter = new SimpleAdapter(
+                    RecentlyAdded.this, booksList, R.layout.book_list_item,
+                    new String[]{
+                            TAG_DESCRIPTION,
+                            TAG_NAME,
+                            TAG_PRICE,
+                            TAG_AUTHOR,
+                    },
+                    new int[]{
+                            R.id.author, R.id.title, R.id.type,R.id.author
+                    }
+            );
+
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                    Map<String, String> map = booksList.get(position);
+                    String link = map.get("id");
+                    String title = map.get("title");
+                    String author = map.get("author");
+                    String description = map.get("description");
+                    String stock = map.get("stock");
+                    String price = map.get("price");
+                    String type = map.get("type");
+
+
+                    String businessId = map.get("restaurant_id");
+
+                    Toast.makeText(getApplicationContext(),
+                            " " + title + " Clicked", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RecentlyAdded.this, BookDetails.class);
+                    intent.putExtra("id", link);
+                    intent.putExtra("name", title);
+                    intent.putExtra("author", author);
+                    intent.putExtra("description", description);
+                    intent.putExtra("stock", stock);
+                    intent.putExtra("price", price);
+                    intent.putExtra("type", type);
+
+                    finish();
+                    startActivity(intent);
 
 
                 }
-                    ListAdapter adapter = new SimpleAdapter(
-                            ViewBooks.this, offersList, R.layout.book_list_item,
-                            new String[]{
-                                    TAG_DESCRIPTION,
-                                    TAG_NAME,
-                                    TAG_PRICE,
-                                    TAG_AUTHOR,
-                            },
-                            new int[]{
-                                    R.id.author, R.id.title, R.id.type,R.id.author
-                            }
-                    );
+            });
 
-                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-                            Map<String, String> map = offersList.get(position);
-                            String link = map.get("id");
-                            String title = map.get("title");
-                            String author = map.get("author");
-                            String description = map.get("description");
-                            String stock = map.get("stock");
-                            String price = map.get("price");
-                            String type = map.get("type");
-
-
-                            String businessId = map.get("restaurant_id");
-
-                            Toast.makeText(getApplicationContext(),
-                                    " " + title + " Clicked", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(ViewBooks.this, BookDetails.class);
-                            intent.putExtra("id", link);
-                            intent.putExtra("name", title);
-                            intent.putExtra("author", author);
-                            intent.putExtra("description", description);
-                            intent.putExtra("stock", stock);
-                            intent.putExtra("price", price);
-                            intent.putExtra("type", type);
-
-                            finish();
-                            startActivity(intent);
-
-
-                        }
-                    });
-
-                    list.setAdapter(adapter);
+            list.setAdapter(adapter);
 
 
             // list.setAdapter(adapter);
@@ -320,14 +346,17 @@ ImageButton sort;
             @Override
             protected void onPostExecute(String result) {
                 myJSON = result;
-                showList();
+                try {
+                    showList();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         }
         GetDataJSON g = new GetDataJSON();
         g.execute();
 
     }
-
 
 
 
@@ -369,7 +398,8 @@ ImageButton sort;
     @Override
     public void onBackPressed() {
 
-        Intent intent = new Intent(ViewBooks.this,AdminSide.class);
+        Intent intent = new Intent(RecentlyAdded.this,AdminSide.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }

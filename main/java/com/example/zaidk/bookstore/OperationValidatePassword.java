@@ -22,5 +22,11 @@ public class OperationValidatePassword implements Strategy {
                 return answer;
         }
 
+    @Override
+    public String doOperationCheckString(String num1, String num2) {
+        return null;
+    }
+
+
 
 }

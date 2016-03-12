@@ -5,5 +5,6 @@ package com.example.zaidk.bookstore;
  */
 public interface Strategy {
         public String doOperation(String num1, String num2);
+        public String doOperationCheckString(String num1, String num2);
 
 }

@@ -61,6 +61,9 @@ public class AdminLogin extends Activity {
 
                 if (context.executeStrategy(username, password).equals("true")) {
                     login(username, password);
+                    SingleLoggedInAdmin object = SingleLoggedInAdmin.getInstance();
+                    //show the message
+                    object.showMessage(username);
 
                 }
                 else{
@@ -71,8 +74,6 @@ public class AdminLogin extends Activity {
         });
 
     }
-
-
 
     private void login(final String username, String password) {
 
@@ -132,6 +133,7 @@ public class AdminLogin extends Activity {
                 String s = result.trim();
                 loadingDialog.dismiss();
                 if (s.equalsIgnoreCase("success")) {
+
                     Intent intent = new Intent(AdminLogin.this, AdminSide.class);
                     finish();
                     startActivity(intent);

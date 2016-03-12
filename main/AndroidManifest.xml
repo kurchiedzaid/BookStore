@@ -30,6 +30,12 @@
         <activity android:name=".AddBook" />
         <activity android:name=".ViewBooks" />
         <activity android:name=".Fiction" />
+        <activity android:name=".BookDetails" />
+        <activity android:name=".SearchDatabase" />
+        <activity android:name=".RecentlyAdded" />
+        <activity android:name=".UserSide" />
+        <activity android:name=".UserSideSearch" />
+        <activity android:name=".Book_Details_customer" />
 
         <activity
             android:name=".WelcomeAdmin"

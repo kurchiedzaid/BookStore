@@ -75,7 +75,7 @@
             android:layout_marginBottom="10dp"
             android:background="#6ac86a"
             android:ems="10"
-            android:id="@+id/price"
+            android:id="@+id/author"
             android:padding="10dp"
             android:singleLine="false"
             android:textColorHint="#ffffff"
@@ -113,31 +113,39 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_weight="0.07">
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="306dp"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:orientation="vertical"
+                android:id="@+id/radioType">
+
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fiction"
-                android:id="@+id/radioButton2"
+                android:text="fiction"
+                android:id="@+id/fiction"
                 android:checked="false"
                 android:layout_weight="0.07" />
 
-            <RadioButton
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="romance"
+                    android:id="@+id/romance"
+                    android:checked="false"
+                    android:layout_weight="0.07" />
+
+                <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="History"
-                android:id="@+id/radioButton3"
+                android:text="history"
+                android:id="@+id/history"
                 android:checked="false"
                 android:layout_weight="0.07" />
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Romance"
-                android:id="@+id/radioButton"
-                android:checked="false"
-                android:layout_weight="0.07"
-                android:layout_gravity="center_horizontal" />
+            </RadioGroup>
         </LinearLayout>
 
         <EditText
@@ -169,12 +177,8 @@
             android:text="Add Book"
             android:layout_gravity="center_horizontal" />
 
-        <RadioGroup
-            android:id="@+id/radioSex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
 
-        </RadioGroup>
+
         <!-- Login Button -->
 
         <!-- Link to Login Screen -->

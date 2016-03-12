@@ -44,10 +44,28 @@ public class OperationValidateEmail implements Strategy {
             }
                 return answer;
         }
+    public String doOperationCheckString(String num1, String num2) {
+        username=num1;
+        if(isContain(num1,num2))
+        {
+            answer="true";
+        }
+        else{
+            answer="false";
+        }
+        return answer;
+    }
 
     private boolean validMail(String yourEmailString) {
         Pattern emailPattern = Pattern.compile(".+@.+\\.[a-z]+");
         Matcher emailMatcher = emailPattern.matcher(username);
         return emailMatcher.matches();
     }
+    private static boolean isContain(String source, String subItem){
+        String pattern = "\\b"+subItem+"\\b";
+        Pattern p= Pattern.compile(pattern);
+        Matcher m=p.matcher(source);
+        return m.find();
+    }
+
 }
