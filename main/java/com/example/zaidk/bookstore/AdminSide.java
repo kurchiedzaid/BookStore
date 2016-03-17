@@ -22,6 +22,7 @@ public class AdminSide extends Activity {
        Button button = (Button) findViewById(R.id.add);
 
         Button view = (Button) findViewById(R.id.view);
+        Button trans = (Button) findViewById(R.id.trans);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +47,17 @@ public class AdminSide extends Activity {
 
 }
 });
+        trans.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminSide.this, Transactions.class);
+                intent.putExtra("activity",  "userSide");
+
+                finish();
+                startActivity(intent);
+
+            }
+        });
 
         }
 

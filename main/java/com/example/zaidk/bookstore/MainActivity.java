@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 loadingDialog.dismiss();
                 if (s.equalsIgnoreCase("success")) {
                     Intent intent = new Intent(MainActivity.this, UserSide.class);
+                    intent.putExtra("user",username);
                     finish();
                     startActivity(intent);
                 } else {

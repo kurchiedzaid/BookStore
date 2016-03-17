@@ -17,7 +17,7 @@
             android:id="@+id/list_image"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            android:src="@drawable/book"/>
+            android:src="@drawable/euro"/>
 
     </LinearLayout>
 
@@ -38,7 +38,7 @@
     <!-- Artist Name -->
     <TextView
         android:id="@+id/author"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#343434"
         android:singleLine="true"
@@ -60,7 +60,7 @@
         android:id="@+id/imageView6" />
 
     <TextView
-        android:id="@+id/type"
+        android:id="@+id/price"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:textColor="#343434"

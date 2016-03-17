@@ -5,8 +5,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ public class Book_Details_customer extends Activity {
     private TextView txtStock;
     private TextView txtDesc;
     private TextView txtType;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class Book_Details_customer extends Activity {
 
         final Intent intent = getIntent();
 
+        username = intent.getStringExtra("user");
         title = intent.getStringExtra("name");
         Description = intent.getStringExtra("description");
         author = intent.getStringExtra("author");
@@ -56,7 +60,20 @@ public class Book_Details_customer extends Activity {
         txtType.setText(type);
         txtStock.setText(stock);
         txtDesc.setText(Description);
+        Log.d("usern", username);
+        Log.d("id", idd);
 
+
+        Button view = (Button) findViewById(R.id.button);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                BookFunctions a = new BookFunctions();
+                a.AddToCart(username, idd,price);
+            }
+        });
 
     }
 
@@ -65,8 +82,10 @@ public class Book_Details_customer extends Activity {
     @Override
     public void onBackPressed() {
         Intent i = getIntent();
-
-        Intent intent = new Intent(Book_Details_customer.this,UserSide.class);
+        Intent intent = new Intent(Book_Details_customer.this, UserSide.class);
+        intent.putExtra("type", "recent");
+        intent.putExtra("activity", "userSide");
+        intent.putExtra("user", username);
 
         startActivity(intent);
         finish();

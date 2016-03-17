@@ -64,7 +64,7 @@ public class RecentlyAdded  extends Activity{
     ListView list;
     String phone;
     String type;
-
+String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +73,9 @@ public class RecentlyAdded  extends Activity{
         loadActivity();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //Get the only object available
+        final Intent intent = getIntent();
 
+        username = intent.getStringExtra("user");
         setTitle(null);
 
         //  setSupportActionBar(toolbar);
@@ -98,6 +100,8 @@ public class RecentlyAdded  extends Activity{
                         Intent intent = new Intent(RecentlyAdded.this, SearchDatabase.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("value", postfix);
+                        intent.putExtra("user",username);
+
                         startActivity(intent);
                     }
                 });
@@ -135,6 +139,8 @@ public class RecentlyAdded  extends Activity{
                         if (item.getTitle().equals("Recently added")) {
                             Intent intent = new Intent(RecentlyAdded.this, RecentlyAdded.class);
                             intent.putExtra("type", "recent");
+                            intent.putExtra("user",username);
+
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
@@ -145,6 +151,8 @@ public class RecentlyAdded  extends Activity{
                         if (item.getTitle().equals("Fiction")) {
                             Intent intent = new Intent(RecentlyAdded.this, RecentlyAdded.class);
                             intent.putExtra("type", "fiction");
+                            intent.putExtra("user",username);
+
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
@@ -154,6 +162,8 @@ public class RecentlyAdded  extends Activity{
                         if (item.getTitle().equals("History")) {
                             Intent intent = new Intent(RecentlyAdded.this, RecentlyAdded.class);
                             intent.putExtra("type", "history");
+                            intent.putExtra("user",username);
+
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
@@ -162,6 +172,8 @@ public class RecentlyAdded  extends Activity{
                         if (item.getTitle().equals("Romance")) {
                             Intent intent = new Intent(RecentlyAdded.this, RecentlyAdded.class);
                             intent.putExtra("type", "romance");
+                            intent.putExtra("user",username);
+
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
@@ -263,8 +275,6 @@ public class RecentlyAdded  extends Activity{
                     String stock = map.get("stock");
                     String price = map.get("price");
                     String type = map.get("type");
-
-
                     String businessId = map.get("restaurant_id");
 
                     Toast.makeText(getApplicationContext(),
@@ -277,7 +287,7 @@ public class RecentlyAdded  extends Activity{
                     intent.putExtra("stock", stock);
                     intent.putExtra("price", price);
                     intent.putExtra("type", type);
-
+                    intent.putExtra("user",username);
                     finish();
                     startActivity(intent);
 

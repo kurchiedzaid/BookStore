@@ -64,6 +64,7 @@ public class UserSideSearch extends Activity {
     String phone;
     String type;
     String str;
+    String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,9 @@ public class UserSideSearch extends Activity {
         loadActivity();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //Get the only object available
+        final Intent intent = getIntent();
 
+        username = intent.getStringExtra("user");
         setTitle(null);
 
         //  setSupportActionBar(toolbar);
@@ -94,6 +97,8 @@ public class UserSideSearch extends Activity {
                         Intent intent = new Intent(UserSideSearch.this, UserSideSearch.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("value", postfix);
+                        intent.putExtra("user",username);
+
 
                         startActivity(intent);
                     }
@@ -131,6 +136,8 @@ public class UserSideSearch extends Activity {
                         if (item.getTitle().equals("Recently added")) {
                             Intent intent = new Intent(UserSideSearch.this, UserSideSearch.class);
                             intent.putExtra("type", "recent");
+                            intent.putExtra("user",username);
+
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
@@ -141,6 +148,8 @@ public class UserSideSearch extends Activity {
                         if (item.getTitle().equals("Fiction")) {
                             Intent intent = new Intent(UserSideSearch.this, UserSideSearch.class);
                             intent.putExtra("type", "fiction");
+                            intent.putExtra("user",username);
+
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
@@ -150,6 +159,8 @@ public class UserSideSearch extends Activity {
                         if (item.getTitle().equals("History")) {
                             Intent intent = new Intent(UserSideSearch.this, UserSideSearch.class);
                             intent.putExtra("type", "history");
+                            intent.putExtra("user",username);
+
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
@@ -158,6 +169,8 @@ public class UserSideSearch extends Activity {
                         if (item.getTitle().equals("Romance")) {
                             Intent intent = new Intent(UserSideSearch.this, UserSideSearch.class);
                             intent.putExtra("type", "romance");
+                            intent.putExtra("user",username);
+
                             getWindow().setWindowAnimations(0);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
@@ -286,6 +299,8 @@ public class UserSideSearch extends Activity {
                     intent.putExtra("stock", stock);
                     intent.putExtra("price", price);
                     intent.putExtra("type", type);
+                    intent.putExtra("user",username);
+
 
                     finish();
                     startActivity(intent);
@@ -406,9 +421,10 @@ public class UserSideSearch extends Activity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(UserSideSearch.this,UserSide.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        Intent intent = new Intent(UserSideSearch.this, UserSide.class);
+        intent.putExtra("type", "recent");
+        intent.putExtra("activity", "userSide");
+        intent.putExtra("user", username);
         finish();
     }
 

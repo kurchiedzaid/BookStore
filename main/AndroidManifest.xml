@@ -36,6 +36,8 @@
         <activity android:name=".UserSide" />
         <activity android:name=".UserSideSearch" />
         <activity android:name=".Book_Details_customer" />
+        <activity android:name=".Cart" />
+        <activity android:name=".Transactions" />
 
         <activity
             android:name=".WelcomeAdmin"

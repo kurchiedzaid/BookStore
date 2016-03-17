@@ -1,19 +1,20 @@
 package com.example.zaidk.bookstore;
 
+/**
+ * Created by zaidkurchied on 15/03/2016.
+ */
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,13 +33,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
  * Created by zaidkurchied on 12/03/2016.
  */
-public class UserSide extends Activity {
+public class Cart extends Activity {
     String myJSON;
+    LinkedList< String > linkedlist = new LinkedList < String > ();
+    LinkedList< String > linkedlist2 = new LinkedList < String > ();
+    LinkedList< Integer > linkedlist3 = new LinkedList < Integer> ();
+
+    private static final String TAG_RESULTSBookmark = "result";
 
     private static final String TAG_RESULTS = "result";
     private static final String TAG_ID = "id";
@@ -47,23 +54,25 @@ public class UserSide extends Activity {
     private static final String TAG_PRICE = "price";
     private static final String TAG_STOCK = "stock";
     private static final String TAG_DESCRIPTION = "description";
+    private static final String TAG_BOOK_ID= "BookId";
+    private static final String TAG_USER= "userName";
     private static final String TAG_TYPE= "type";
-
+    String id;
     ImageButton sort;
-
+    String stock;
     public String email="zaid";
     JSONArray offers = null;
-    ArrayList<HashMap<String, String>> offersList;
+    ArrayList<HashMap<String, String>> bookList;
     TextView txt;
     ListView list;
     String phone;
     String type;
     String username;
-
+    TextView total;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_side_activ);
+        setContentView(R.layout.cart);
         //   txt = (TextView) findViewById(R.id.log);
         loadActivity();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,139 +81,47 @@ public class UserSide extends Activity {
         setTitle(null);
 
         final Intent intent = getIntent();
-
+        total=(TextView) findViewById(R.id.total);
         username = intent.getStringExtra("user");
-        //  setSupportActionBar(toolbar);
 
-        final EditText search = (EditText) toolbar.findViewById(R.id.editSearch);
-        ImageButton buttonSearch = (ImageButton) toolbar.findViewById(R.id.search);
-        ImageButton cart = (ImageButton) toolbar.findViewById(R.id.cart);
-
-
-        //spinner();
-        buttonSearch.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View view) {
-                        Log.v("EditText", search.getText().toString());
-                        String value = search.getText().toString();
-
-                        GrammerCorrection ip=new GrammerCorrection();
-
-                        String postfix = ip.conversion(value);
-//
-                        System.out.println("Infix:   " + postfix);
-                        System.out.println("UserName: " + username);
-                        Intent intent = new Intent(UserSide.this, UserSideSearch.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra("value", postfix);
-                        intent.putExtra("user",username);
-                        startActivity(intent);
-                    }
-                });
-
-
-        //spinner();
-        cart.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View view) {
-
-                        System.out.println("UserName: " + username);
-                        Intent intent = new Intent(UserSide.this, Cart.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra("user", username);
-                        startActivity(intent);
-                    }
-                });
     }
 
 
     private void loadActivity() {
         // Do all of your work here
         list = (ListView) findViewById(R.id.listView);
-        offersList = new ArrayList<HashMap<String, String>>();
-        getData(); //get business email
+        bookList = new ArrayList<HashMap<String, String>>();
+        getCart();
 
-
-
-        sort = (ImageButton) findViewById(R.id.sort);
-        sort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(UserSide.this, sort);
-                //Insflating the Popup using xml file
-                popup.getMenuInflater()
-                        .inflate(R.menu.menu_main, popup.getMenu());
-
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(
-                                UserSide.this,
-                                "You Clicked : " + item.getTitle(),
-                                Toast.LENGTH_SHORT
-                        ).show();
-
-                        if (item.getTitle().equals("Recently added")) {
-                            Intent intent = new Intent(UserSide.this, UserSideSearch.class);
-                            intent.putExtra("type", "recent");
-                            intent.putExtra("activity", "userSide");
-                            intent.putExtra("user",username);
-                            getWindow().setWindowAnimations(0);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            finish();
-                        }
-
-
-                        if (item.getTitle().equals("Fiction")) {
-                            Intent intent = new Intent(UserSide.this, UserSideSearch.class);
-                            intent.putExtra("type", "fiction");
-                            intent.putExtra("activity",  "userSide");
-                            intent.putExtra("user",username);
-
-                            getWindow().setWindowAnimations(0);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            finish();
-                        }
-
-                        if (item.getTitle().equals("History")) {
-                            Intent intent = new Intent(UserSide.this, UserSideSearch.class);
-                            intent.putExtra("type", "history");
-                            intent.putExtra("activity",  "userSide");
-                            intent.putExtra("user",username);
-
-                            getWindow().setWindowAnimations(0);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            finish();
-                        }
-                        if (item.getTitle().equals("Romance")) {
-                            Intent intent = new Intent(UserSide.this, UserSideSearch.class);
-                            intent.putExtra("type", "romance");
-                            intent.putExtra("activity",  "userSide");
-                            intent.putExtra("user",username);
-
-                            getWindow().setWindowAnimations(0);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            finish();
-                        }
-
-                        return true;
-                    }
-                });
-
-                popup.show(); //showing popup menu
-            }
-        }); //closing the setOnClickListener method
-
-
+        doTransaction(null,null);
 
     }
 
+public void doTransaction(final String stock, final String id){
+    Button pay = (Button) findViewById(R.id.pay);
 
+    //spinner();
+    pay.setOnClickListener(
+            new View.OnClickListener() {
+                public void onClick(View view) {
+                    int y = Integer.parseInt(stock);
+                    BookFunctions a = new BookFunctions();
+
+                    int lv= y-1;
+                    String stockS = Integer.toString(lv);
+if(lv>0) {
+    //  BookFunctions a = new BookFunctions();
+    a.updateStock(stockS, id);
+
+    a.removeCart();
+}
+                    else{
+    Toast.makeText(getApplicationContext(), "Sorry this item is out of stock", Toast.LENGTH_LONG).show();
+
+}
+                }
+            });
+}
     protected void showList() {
 
         try {
@@ -213,36 +130,32 @@ public class UserSide extends Activity {
 
             for (int i = 0; i < offers.length(); i++) {
                 JSONObject c = offers.getJSONObject(i);
-                String id = c.getString(TAG_ID);
+                 id = c.getString(TAG_ID);
                 String name = c.getString(TAG_NAME);
                 String author = c.getString(TAG_AUTHOR);
                 String description = c.getString(TAG_DESCRIPTION);
                 String price = c.getString(TAG_PRICE);
-                String stock = c.getString(TAG_STOCK);
+                stock = c.getString(TAG_STOCK);
                 String type = c.getString(TAG_TYPE);
 
+                BookFunctions a = new BookFunctions();
+                if (linkedlist.contains(username) && linkedlist2.contains(id)) {
 
-
-
-                HashMap<String, String> persons = new HashMap<String, String>();
-                persons.put(TAG_ID, id);
-                persons.put(TAG_NAME, name);
-                persons.put(TAG_AUTHOR, author);
-                persons.put(TAG_DESCRIPTION, description);
-                persons.put(TAG_PRICE, price);
-                persons.put(TAG_STOCK, stock);
-                persons.put(TAG_TYPE, type);
-
-
-                //    persons.put(TAG_DATE,d);
-
-
-                offersList.add(persons);
-
+                    HashMap<String, String> persons = new HashMap<String, String>();
+                    persons.put(TAG_ID, id);
+                    persons.put(TAG_NAME, name);
+                    persons.put(TAG_AUTHOR, author);
+                    persons.put(TAG_DESCRIPTION, description);
+                    persons.put(TAG_PRICE, price);
+                    persons.put(TAG_STOCK, stock);
+                    persons.put(TAG_TYPE, type);
+doTransaction(stock,id);
+                    bookList.add(persons);
+                }
 
             }
             ListAdapter adapter = new SimpleAdapter(
-                    UserSide.this, offersList, R.layout.book_list_item,
+                    Cart.this, bookList, R.layout.book_list_item,
                     new String[]{
                             TAG_DESCRIPTION,
                             TAG_NAME,
@@ -257,7 +170,7 @@ public class UserSide extends Activity {
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-                    Map<String, String> map = offersList.get(position);
+                    Map<String, String> map = bookList.get(position);
                     String link = map.get("id");
                     String title = map.get("title");
                     String author = map.get("author");
@@ -271,7 +184,7 @@ public class UserSide extends Activity {
 
                     Toast.makeText(getApplicationContext(),
                             " " + title + " Clicked", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(UserSide.this, Book_Details_customer.class);
+                    Intent intent = new Intent(Cart.this, Book_Details_customer.class);
                     intent.putExtra("id", link);
                     intent.putExtra("name", title);
                     intent.putExtra("author", author);
@@ -358,6 +271,95 @@ public class UserSide extends Activity {
 
     }
 
+    protected void showCart() {
+
+        try {
+            JSONObject jsonObj = new JSONObject(myJSON);
+            offers = jsonObj.getJSONArray(TAG_RESULTSBookmark);
+
+            for (int i = 0; i < offers.length(); i++) {
+                JSONObject c = offers.getJSONObject(i);
+                String id = c.getString(TAG_BOOK_ID);
+                String user = c.getString(TAG_USER);
+                String price = c.getString(TAG_PRICE);
+                linkedlist3.add(Integer.valueOf(price));
+
+                linkedlist.add(id);
+                linkedlist2.add(user);
+
+
+            }
+            int sum = 0;
+
+            for (int ii: linkedlist3) {
+                sum += ii;
+            }
+            Log.d("sum", String.valueOf(sum));
+            total.setText("Total of"+""+sum);
+            getData();
+
+
+
+
+
+
+            // list.setAdapter(adapter);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void getCart() {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+                DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
+                HttpPost httppost = new HttpPost("http://10.0.2.2/info/showCart.php");
+
+                // Depends on your web service
+                httppost.setHeader("Content-type", "application/json");
+
+                InputStream inputStream = null;
+                String result = null;
+                try {
+                    HttpResponse response = httpclient.execute(httppost);
+                    HttpEntity entity = response.getEntity();
+
+                    inputStream = entity.getContent();
+                    // json is UTF-8 by default
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+                    StringBuilder sb = new StringBuilder();
+
+                    String line = null;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    result = sb.toString();
+                } catch (Exception e) {
+                    // Oops
+                } finally {
+                    try {
+                        if (inputStream != null) inputStream.close();
+                    } catch (Exception squish) {
+                    }
+                }
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+showCart();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute();
+
+    }
+
 
 
 
@@ -398,9 +400,10 @@ public class UserSide extends Activity {
 
     @Override
     public void onBackPressed() {
-          Intent intent = new Intent(UserSide.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        Intent intent = new Intent(Cart.this, UserSide.class);
+        intent.putExtra("type", "recent");
+        intent.putExtra("activity", "userSide");
+        intent.putExtra("user", username);
         finish();
     }
 
