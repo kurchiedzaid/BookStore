@@ -31,10 +31,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,8 +52,8 @@ public class ViewBooks extends Activity {
 ImageButton sort;
 
     public String email="zaid";
-    JSONArray offers = null;
-    ArrayList<HashMap<String, String>> offersList;
+    JSONArray books = null;
+    ArrayList<HashMap<String, String>> booksList;
     TextView txt;
     ListView list;
     String phone;
@@ -104,8 +101,8 @@ ImageButton sort;
     private void loadActivity() {
         // Do all of your work here
         list = (ListView) findViewById(R.id.listView);
-        offersList = new ArrayList<HashMap<String, String>>();
-        getData(); //get business email
+        booksList = new ArrayList<HashMap<String, String>>();
+        getData();
 
 
 
@@ -181,10 +178,10 @@ ImageButton sort;
 
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
-            offers = jsonObj.getJSONArray(TAG_RESULTS);
+            books = jsonObj.getJSONArray(TAG_RESULTS);
 
-            for (int i = 0; i < offers.length(); i++) {
-                JSONObject c = offers.getJSONObject(i);
+            for (int i = 0; i < books.length(); i++) {
+                JSONObject c = books.getJSONObject(i);
                 String id = c.getString(TAG_ID);
                 String name = c.getString(TAG_NAME);
                 String author = c.getString(TAG_AUTHOR);
@@ -209,12 +206,12 @@ ImageButton sort;
                     //    persons.put(TAG_DATE,d);
 
 
-                    offersList.add(persons);
+                    booksList.add(persons);
 
 
                 }
                     ListAdapter adapter = new SimpleAdapter(
-                            ViewBooks.this, offersList, R.layout.book_list_item,
+                            ViewBooks.this, booksList, R.layout.book_list_item,
                             new String[]{
                                     TAG_DESCRIPTION,
                                     TAG_NAME,
@@ -222,14 +219,14 @@ ImageButton sort;
                                     TAG_AUTHOR,
                             },
                             new int[]{
-                                    R.id.author, R.id.title, R.id.type,R.id.author
+                                    R.id.Author, R.id.title, R.id.type,R.id.Price
                             }
                     );
 
                     list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-                            Map<String, String> map = offersList.get(position);
+                            Map<String, String> map = booksList.get(position);
                             String link = map.get("id");
                             String title = map.get("title");
                             String author = map.get("author");
@@ -239,7 +236,6 @@ ImageButton sort;
                             String type = map.get("type");
 
 
-                            String businessId = map.get("restaurant_id");
 
                             Toast.makeText(getApplicationContext(),
                                     " " + title + " Clicked", Toast.LENGTH_SHORT).show();
@@ -270,15 +266,6 @@ ImageButton sort;
 
     }
 
-    //  @Override
-    //  protected void onResume() {
-    //  super.onResume();
-
-    //  Intent intent = new Intent(BusinessSide.this , BusinessSide.class);
-    //  startActivity(intent);
-    //  finish();
-
-    //  }
     public void getData() {
         class GetDataJSON extends AsyncTask<String, Void, String> {
 
@@ -359,10 +346,7 @@ ImageButton sort;
 
     @Override
     protected void onRestart() {
-        //   loadActivity();
-        //  Intent intent = new Intent(BusinessSide.this, BusinessSide.class);
-        // BusinessSide.this.startActivity(intent);
-        // finish();
+
         super.onRestart();
     }
 

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -25,16 +27,19 @@ public class AddBook extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_book);
+        getSupportActionBar().setTitle("Add Book");
+
 
         final EditText editTitle = (EditText) findViewById(R.id.title);
-        final EditText editAuthor = (EditText) findViewById(R.id.author);
-        final EditText editPrice = (EditText) findViewById(R.id.author);
+        final EditText editAuthor = (EditText) findViewById(R.id.Author);
+        final EditText editPrice = (EditText) findViewById(R.id.Price);
         final EditText editStock = (EditText) findViewById(R.id.stock);
         final EditText editdesc = (EditText) findViewById(R.id.desc);
-        //Add offer when button is clicked  and send  business id and business email to business side
-        Button button = (Button) findViewById(R.id.btnOffer);
+        Button button = (Button) findViewById(R.id.add);
 
 // This will get the radiogroup
         RadioGroup rGroup = (RadioGroup) findViewById(R.id.radioType);
@@ -57,14 +62,14 @@ public class AddBook extends AppCompatActivity {
                     if (checkedRadioButton.getText().equals("romance")) {
                         String ty = "romance";
                         type = ty;
-                        Toast.makeText(getApplicationContext(), "food",
+                        Toast.makeText(getApplicationContext(), "Romance",
                                 Toast.LENGTH_SHORT).show();
 
                     }
                     if (checkedRadioButton.getText().equals("history")) {
                         String ty = "history";
                         type = ty;
-                        Toast.makeText(getApplicationContext(), "fitness",
+                        Toast.makeText(getApplicationContext(), "History",
                                 Toast.LENGTH_SHORT).show();
 
 
@@ -72,7 +77,7 @@ public class AddBook extends AppCompatActivity {
                     if (checkedRadioButton.getText().equals("fiction")) {
                         String ty = "fiction";
                         type = ty;
-                        Toast.makeText(getApplicationContext(), "entertainment",
+                        Toast.makeText(getApplicationContext(), "Fiction",
                                 Toast.LENGTH_SHORT).show();
 
                     }

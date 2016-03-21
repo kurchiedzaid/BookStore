@@ -1,17 +1,13 @@
 package com.example.zaidk.bookstore;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by zaidkurchied on 12/03/2016.
@@ -37,7 +33,7 @@ public class Book_Details_customer extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_desc_customer);
         txtTitle = (TextView) findViewById(R.id.title);
-        txtAuthor = (TextView) findViewById(R.id.author);
+        txtAuthor = (TextView) findViewById(R.id.Price);
         txtDesc = (TextView) findViewById(R.id.desc);
         txtPrice = (TextView) findViewById(R.id.price);
         txtType = (TextView) findViewById(R.id.type);
@@ -71,10 +67,45 @@ public class Book_Details_customer extends Activity {
             public void onClick(View v) {
 
                 BookFunctions a = new BookFunctions();
-                a.AddToCart(username, idd,price);
+                a.AddToCart(username, idd, price);
+                Toast.makeText(
+                       Book_Details_customer.this,
+                        "Added to cart: " + "",
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         });
 
+        Button feedback = (Button) findViewById(R.id.feedback);
+
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Book_Details_customer.this, AddReview.class);
+                intent.putExtra("name", title);
+                intent.putExtra("user", username);
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+        Button viewReviews = (Button) findViewById(R.id.viewR);
+
+        viewReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Book_Details_customer.this, ViewReviews.class);
+                intent.putExtra("name", title);
+                intent.putExtra("user", username);
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+
+            }
+        });
     }
 
 

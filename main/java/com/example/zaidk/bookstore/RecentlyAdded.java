@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -64,10 +66,12 @@ public class RecentlyAdded  extends Activity{
     ListView list;
     String phone;
     String type;
-String username;
+    String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.view_books);
         //   txt = (TextView) findViewById(R.id.log);
         loadActivity();
@@ -77,6 +81,7 @@ String username;
 
         username = intent.getStringExtra("user");
         setTitle(null);
+
 
         //  setSupportActionBar(toolbar);
 
@@ -112,7 +117,7 @@ String username;
         // Do all of your work here
         list = (ListView) findViewById(R.id.listView);
         booksList = new ArrayList<HashMap<String, String>>();
-        getData(); //get business email
+        getData();
 
 
 
@@ -230,8 +235,9 @@ String username;
                 Date dateBefore30Days = cal.getTime();
                 System.out.println(dateBefore30Days);
                 String types = getIntent().getExtras().getString("type");
-
-                if ( date1.after(dateBefore30Days) || types!=null && types.equalsIgnoreCase(type)) {
+                System.out.print(types);
+                Log.d(types,"dddd");
+                if (type.equals("recent") && date1.after(dateBefore30Days) || types!=null && types.equalsIgnoreCase(type)) {
 
 
                     HashMap<String, String> persons = new HashMap<String, String>();
@@ -260,7 +266,7 @@ String username;
                             TAG_AUTHOR,
                     },
                     new int[]{
-                            R.id.author, R.id.title, R.id.type,R.id.author
+                            R.id.Author, R.id.title, R.id.type,R.id.Price
                     }
             );
 
@@ -275,7 +281,6 @@ String username;
                     String stock = map.get("stock");
                     String price = map.get("price");
                     String type = map.get("type");
-                    String businessId = map.get("restaurant_id");
 
                     Toast.makeText(getApplicationContext(),
                             " " + title + " Clicked", Toast.LENGTH_SHORT).show();
@@ -306,15 +311,7 @@ String username;
 
     }
 
-    //  @Override
-    //  protected void onResume() {
-    //  super.onResume();
 
-    //  Intent intent = new Intent(BusinessSide.this , BusinessSide.class);
-    //  startActivity(intent);
-    //  finish();
-
-    //  }
     public void getData() {
         class GetDataJSON extends AsyncTask<String, Void, String> {
 
@@ -398,10 +395,7 @@ String username;
 
     @Override
     protected void onRestart() {
-        //   loadActivity();
-        //  Intent intent = new Intent(BusinessSide.this, BusinessSide.class);
-        // BusinessSide.this.startActivity(intent);
-        // finish();
+
         super.onRestart();
     }
 

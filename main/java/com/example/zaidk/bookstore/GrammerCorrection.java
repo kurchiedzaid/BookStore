@@ -10,7 +10,7 @@ public class GrammerCorrection implements Interpreter{
     @Override
     public String conversion(String exp) {
 
-        int priority = 0;// for the priority of operators.
+        int priority = 0;
 
         String postfix = "";
 
@@ -21,7 +21,6 @@ public class GrammerCorrection implements Interpreter{
             char ch = exp.charAt(i);
             if (ch == '+' || ch == '-' || ch == '*' || ch == '/'||ch=='%')
             {
-                // check the precedence
                 if (s1.size() <= 0)
                     s1.push(ch);
                 else

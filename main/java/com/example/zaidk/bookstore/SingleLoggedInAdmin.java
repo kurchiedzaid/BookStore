@@ -5,14 +5,11 @@ package com.example.zaidk.bookstore;
  */
 public class SingleLoggedInAdmin {
 
-    //create an object of SingleObject
     private static SingleLoggedInAdmin instance = new SingleLoggedInAdmin();
 
-    //make the constructor private so that this class cannot be
-    //instantiated
+
     private SingleLoggedInAdmin(){}
 
-    //Get the only object available
     public static SingleLoggedInAdmin getInstance(){
         return instance;
     }

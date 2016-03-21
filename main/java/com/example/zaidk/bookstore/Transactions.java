@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -54,12 +53,18 @@ public class Transactions extends Activity {
     private static final String TAG_BOOK_ID= "BookId";
     private static final String TAG_USER= "userName";
     private static final String TAG_TYPE= "type";
+    private static final String TAG_USERNAME= "name";
+    private static final String TAG_EMAIL= "email";
+    private static final String TAG_ADDRESS= "address";
+    private static final String TAG_PHONE= "phone";
+    private static final String TAG_PAYMENT= "payment";
+
     String id;
     String bid;
     ImageButton sort;
     String stock;
     public String email="zaid";
-    JSONArray offers = null;
+    JSONArray books = null;
     ArrayList<HashMap<String, String>> bookList;
     TextView txt;
     ListView list;
@@ -96,34 +101,14 @@ public class Transactions extends Activity {
 
     }
 
-//    public void doTransaction(final String stock, final String id){
-//        Button pay = (Button) findViewById(R.id.pay);
-//
-//        //spinner();
-//        pay.setOnClickListener(
-//                new View.OnClickListener() {
-//                    public void onClick(View view) {
-//                        int y = Integer.parseInt(stock);
-//                        BookFunctions a = new BookFunctions();
-//
-//                        int lv= y-1;
-//                        String stockS = Integer.toString(lv);
-//
-//                        //  BookFunctions a = new BookFunctions();
-//                        a.updateStock(stockS,id);
-//
-//                        a.removeCart();
-//                    }
-//                });
-//    }
     protected void showList(String user) {
 
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
-            offers = jsonObj.getJSONArray(TAG_RESULTS);
+            books = jsonObj.getJSONArray(TAG_RESULTS);
 
-            for (int i = 0; i < offers.length(); i++) {
-                JSONObject c = offers.getJSONObject(i);
+            for (int i = 0; i < books.length(); i++) {
+                JSONObject c = books.getJSONObject(i);
                 id = c.getString(TAG_ID);
                 String name = c.getString(TAG_NAME);
                 String author = c.getString(TAG_AUTHOR);
@@ -158,40 +143,30 @@ public class Transactions extends Activity {
                             TAG_USER,
                     },
                     new int[]{
-                            R.id.author, R.id.title, R.id.price
+                            R.id.Price, R.id.title, R.id.price
                     }
             );
 
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
+
                     Map<String, String> map = bookList.get(position);
                     String link = map.get("id");
                     String title = map.get("title");
-                    String author = map.get("author");
-                    String description = map.get("description");
-                    String stock = map.get("stock");
-                    String price = map.get("price");
-                    String type = map.get("type");
 
-
-                    String businessId = map.get("restaurant_id");
+                    String user = map.get("userName");
 
                     Toast.makeText(getApplicationContext(),
                             " " + title + " Clicked", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Transactions.this, Book_Details_customer.class);
+                    Intent intent = new Intent(Transactions.this, CustDetails.class);
                     intent.putExtra("id", link);
-                    intent.putExtra("name", title);
-                    intent.putExtra("author", author);
-                    intent.putExtra("description", description);
-                    intent.putExtra("stock", stock);
-                    intent.putExtra("price", price);
-                    intent.putExtra("type", type);
-                    intent.putExtra("user",username);
-
-
+                    intent.putExtra("user", user);
+                    System.out.print(user);
                     finish();
                     startActivity(intent);
+
+
 
 
                 }
@@ -208,15 +183,6 @@ public class Transactions extends Activity {
 
     }
 
-    //  @Override
-    //  protected void onResume() {
-    //  super.onResume();
-
-    //  Intent intent = new Intent(BusinessSide.this , BusinessSide.class);
-    //  startActivity(intent);
-    //  finish();
-
-    //  }
     public void getData(final String user) {
         class GetDataJSON extends AsyncTask<String, Void, String> {
 
@@ -270,10 +236,10 @@ public class Transactions extends Activity {
 
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
-            offers = jsonObj.getJSONArray(TAG_RESULTSBookmark);
+            books = jsonObj.getJSONArray(TAG_RESULTSBookmark);
 
-            for (int i = 0; i < offers.length(); i++) {
-                JSONObject c = offers.getJSONObject(i);
+            for (int i = 0; i < books.length(); i++) {
+                JSONObject c = books.getJSONObject(i);
                 bid = c.getString(TAG_BOOK_ID);
                 user = c.getString(TAG_USER);
                 String price = c.getString(TAG_PRICE);
@@ -289,7 +255,7 @@ public class Transactions extends Activity {
                 sum += ii;
             }
             Log.d("sum", String.valueOf(sum));
-            total.setText("Total of"+""+sum);
+            total.setText("Total of"+" "+sum+ " "+ "Euro");
             getData(bid);
 
 
@@ -357,6 +323,8 @@ public class Transactions extends Activity {
 
 
 
+
+
     ////////////////////Remove method//////////////////////////////
 
 
@@ -385,10 +353,7 @@ public class Transactions extends Activity {
 
     @Override
     protected void onRestart() {
-        //   loadActivity();
-        //  Intent intent = new Intent(BusinessSide.this, BusinessSide.class);
-        // BusinessSide.this.startActivity(intent);
-        // finish();
+
         super.onRestart();
     }
 

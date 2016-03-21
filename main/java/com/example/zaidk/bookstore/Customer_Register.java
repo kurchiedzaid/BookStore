@@ -57,7 +57,6 @@ public class Customer_Register extends Activity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String serverURL = "http://10.0.2.2/Codes/AddBusiness.php";
                 name = editNameText.getText().toString();
                 email = editEmailText.getText().toString();
                 password = editPasswordText.getText().toString();
@@ -76,6 +75,7 @@ public class Customer_Register extends Activity {
                 Tel = editTelText.getText().toString();
                 if(context.executeStrategy(email, password).equals("true") && contextPassword.executeStrategy(password2, password).equals("true")){
                     Toast.makeText(Customer_Register.this, "you have successfully registered ", Toast.LENGTH_LONG).show();
+                    finish();
                     // Use AsyncTask execute Method To Prevent ANR Problem
                     new SummaryAsyncTask().execute((Void) null);
                 } else {
@@ -117,8 +117,6 @@ public class Customer_Register extends Activity {
         protected Boolean doInBackground(Void...params) {
             postData(name, country, email, address, password, Tel, payment);
 
-//                Intent myIntent = new Intent(Customer_Register().this, BusinessLogin.class);
-//                startActivity(myIntent);
             return null;
 
         }

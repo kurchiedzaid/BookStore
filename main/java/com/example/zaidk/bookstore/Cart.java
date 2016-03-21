@@ -61,7 +61,7 @@ public class Cart extends Activity {
     ImageButton sort;
     String stock;
     public String email="zaid";
-    JSONArray offers = null;
+    JSONArray books = null;
     ArrayList<HashMap<String, String>> bookList;
     TextView txt;
     ListView list;
@@ -109,11 +109,12 @@ public void doTransaction(final String stock, final String id){
 
                     int lv= y-1;
                     String stockS = Integer.toString(lv);
-if(lv>0) {
-    //  BookFunctions a = new BookFunctions();
-    a.updateStock(stockS, id);
+     if(lv>0) {
+                    a.updateStock(stockS, id);
 
-    a.removeCart();
+                    a.removeCart();
+                    Toast.makeText(getApplicationContext(), "Transaction Complete", Toast.LENGTH_LONG).show();
+
 }
                     else{
     Toast.makeText(getApplicationContext(), "Sorry this item is out of stock", Toast.LENGTH_LONG).show();
@@ -126,10 +127,10 @@ if(lv>0) {
 
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
-            offers = jsonObj.getJSONArray(TAG_RESULTS);
+            books = jsonObj.getJSONArray(TAG_RESULTS);
 
-            for (int i = 0; i < offers.length(); i++) {
-                JSONObject c = offers.getJSONObject(i);
+            for (int i = 0; i < books.length(); i++) {
+                JSONObject c = books.getJSONObject(i);
                  id = c.getString(TAG_ID);
                 String name = c.getString(TAG_NAME);
                 String author = c.getString(TAG_AUTHOR);
@@ -149,7 +150,7 @@ if(lv>0) {
                     persons.put(TAG_PRICE, price);
                     persons.put(TAG_STOCK, stock);
                     persons.put(TAG_TYPE, type);
-doTransaction(stock,id);
+                    doTransaction(stock,id);
                     bookList.add(persons);
                 }
 
@@ -163,7 +164,7 @@ doTransaction(stock,id);
                             TAG_AUTHOR,
                     },
                     new int[]{
-                            R.id.author, R.id.title, R.id.type,R.id.author
+                            R.id.Price, R.id.title, R.id.type,R.id.Price
                     }
             );
 
@@ -180,7 +181,6 @@ doTransaction(stock,id);
                     String type = map.get("type");
 
 
-                    String businessId = map.get("restaurant_id");
 
                     Toast.makeText(getApplicationContext(),
                             " " + title + " Clicked", Toast.LENGTH_SHORT).show();
@@ -213,15 +213,7 @@ doTransaction(stock,id);
 
     }
 
-    //  @Override
-    //  protected void onResume() {
-    //  super.onResume();
 
-    //  Intent intent = new Intent(BusinessSide.this , BusinessSide.class);
-    //  startActivity(intent);
-    //  finish();
-
-    //  }
     public void getData() {
         class GetDataJSON extends AsyncTask<String, Void, String> {
 
@@ -275,10 +267,10 @@ doTransaction(stock,id);
 
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
-            offers = jsonObj.getJSONArray(TAG_RESULTSBookmark);
+            books = jsonObj.getJSONArray(TAG_RESULTSBookmark);
 
-            for (int i = 0; i < offers.length(); i++) {
-                JSONObject c = offers.getJSONObject(i);
+            for (int i = 0; i < books.length(); i++) {
+                JSONObject c = books.getJSONObject(i);
                 String id = c.getString(TAG_BOOK_ID);
                 String user = c.getString(TAG_USER);
                 String price = c.getString(TAG_PRICE);
@@ -295,7 +287,7 @@ doTransaction(stock,id);
                 sum += ii;
             }
             Log.d("sum", String.valueOf(sum));
-            total.setText("Total of"+""+sum);
+            total.setText("Total of"+": "+sum+" " + "Euro");
             getData();
 
 
@@ -352,7 +344,7 @@ doTransaction(stock,id);
             @Override
             protected void onPostExecute(String result) {
                 myJSON = result;
-showCart();
+                showCart();
             }
         }
         GetDataJSON g = new GetDataJSON();
@@ -391,12 +383,11 @@ showCart();
 
     @Override
     protected void onRestart() {
-        //   loadActivity();
-        //  Intent intent = new Intent(BusinessSide.this, BusinessSide.class);
-        // BusinessSide.this.startActivity(intent);
-        // finish();
+
         super.onRestart();
     }
+
+
 
     @Override
     public void onBackPressed() {

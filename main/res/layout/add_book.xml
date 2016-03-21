@@ -2,13 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-
-
-
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:weightSum="1">
+    >
 
     <LinearLayout
         android:layout_width="335dp"
@@ -29,14 +23,15 @@
             android:layout_weight="0.07"
             style="@style/Base.DialogWindowTitle.AppCompat"
             android:autoText="true"
-            android:textSize="@dimen/abc_text_size_title_material_toolbar" />
+            android:textSize="@dimen/abc_text_size_title_material_toolbar"
+            android:textColor="#ff8e00" />
 
         <EditText
             android:id="@+id/title"
             android:layout_width="fill_parent"
             android:layout_height="53dp"
             android:layout_marginBottom="10dp"
-            android:background="#6ac86a"
+            android:background="#ff8e00"
             android:inputType="textEmailAddress"
             android:padding="10dp"
             android:singleLine="true"
@@ -53,16 +48,16 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:layout_marginBottom="10dp"
-            android:background="#6ac86a"
+            android:background="#ff8e00"
             android:ems="10"
-            android:id="@+id/author"
+            android:id="@+id/Author"
             android:padding="10dp"
             android:singleLine="true"
             android:textColorHint="#ffffff"
             android:alpha="10"
             android:textIsSelectable="false"
             android:layout_gravity="right"
-            android:hint="Location"
+            android:hint="Author"
             android:gravity="top"
             android:drawablePadding="10dp"
             />
@@ -73,9 +68,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="#6ac86a"
+            android:background="#ff8e00"
             android:ems="10"
-            android:id="@+id/author"
+            android:id="@+id/Price"
             android:padding="10dp"
             android:singleLine="false"
             android:textColorHint="#ffffff"
@@ -93,7 +88,7 @@
             android:layout_width="306dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="#6ac86a"
+            android:background="#ff8e00"
             android:ems="10"
             android:id="@+id/stock"
             android:padding="10dp"
@@ -127,7 +122,8 @@
                 android:text="fiction"
                 android:id="@+id/fiction"
                 android:checked="false"
-                android:layout_weight="0.07" />
+                android:layout_weight="0.07"
+                android:textColor="#ff8e00" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -135,7 +131,8 @@
                     android:text="romance"
                     android:id="@+id/romance"
                     android:checked="false"
-                    android:layout_weight="0.07" />
+                    android:layout_weight="0.07"
+                    android:textColor="#ff8e00" />
 
                 <RadioButton
                 android:layout_width="wrap_content"
@@ -143,7 +140,8 @@
                 android:text="history"
                 android:id="@+id/history"
                 android:checked="false"
-                android:layout_weight="0.07" />
+                android:layout_weight="0.07"
+                    android:textColor="#ff8e00" />
 
             </RadioGroup>
         </LinearLayout>
@@ -152,7 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="#6ac86a"
+            android:background="#ff8e00"
             android:ems="10"
             android:id="@+id/desc"
             android:padding="10dp"
@@ -169,11 +167,11 @@
             android:layout_weight="0.21" />
 
         <Button
-            android:id="@+id/btnOffer"
+            android:id="@+id/add"
             android:layout_width="127dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
-            android:background="#ea4c88"
+            android:background="#ff8e00"
             android:text="Add Book"
             android:layout_gravity="center_horizontal" />
 

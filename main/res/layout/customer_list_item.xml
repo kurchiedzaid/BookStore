@@ -15,9 +15,9 @@
 
         <ImageView
             android:id="@+id/list_image"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:src="@drawable/euro"/>
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:src="@drawable/user"/>
 
     </LinearLayout>
 
@@ -46,7 +46,8 @@
         android:text="Just gona stand there and ..."
         android:layout_alignLeft="@+id/title"
         android:layout_alignStart="@+id/title"
-        android:layout_below="@+id/title" />
+        android:layout_below="@+id/title"
+        android:layout_alignBottom="@+id/thumbnail" />
 
 
 
@@ -60,15 +61,29 @@
         android:id="@+id/imageView6" />
 
     <TextView
-        android:id="@+id/price"
-        android:layout_width="60dp"
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#343434"
         android:singleLine="true"
         android:textSize="10dip"
         android:text="Author"
-        android:layout_alignLeft="@+id/Price"
-        android:layout_alignStart="@+id/Price"
-        android:layout_alignBottom="@+id/thumbnail" />
+        android:layout_below="@+id/Price"
+        android:layout_toLeftOf="@+id/imageView6"
+        android:layout_toStartOf="@+id/imageView6"
+        android:layout_marginRight="53dp"
+        android:layout_marginEnd="53dp" />
+
+    <TextView
+        android:id="@+id/pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#343434"
+        android:singleLine="true"
+        android:textSize="10dip"
+        android:text="Author"
+        android:layout_below="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toEndOf="@+id/thumbnail" />
 
 </RelativeLayout>

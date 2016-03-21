@@ -1,6 +1,8 @@
 package com.example.zaidk.bookstore;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -57,8 +59,8 @@ public class UserSideSearch extends Activity {
     ImageButton sort;
 
     public String email="zaid";
-    JSONArray offers = null;
-    ArrayList<HashMap<String, String>> offersList;
+    JSONArray books = null;
+    ArrayList<HashMap<String, String>> bookList;
     TextView txt;
     ListView list;
     String phone;
@@ -68,7 +70,7 @@ public class UserSideSearch extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_books);
+        setContentView(R.layout.user_side_activ);
         //   txt = (TextView) findViewById(R.id.log);
         loadActivity();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -82,8 +84,21 @@ public class UserSideSearch extends Activity {
 
         final EditText search = (EditText) toolbar.findViewById(R.id.editSearch);
         ImageButton buttonSearch = (ImageButton) toolbar.findViewById(R.id.search);
+        ImageButton cart = (ImageButton) toolbar.findViewById(R.id.cart);
 
 
+        //spinner();
+        cart.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View view) {
+
+                        System.out.println("UserName: " + username);
+                        Intent intent = new Intent(UserSideSearch.this, Cart.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("user", username);
+                        startActivity(intent);
+                    }
+                });
         //spinner();
         buttonSearch.setOnClickListener(
                 new View.OnClickListener() {
@@ -109,8 +124,8 @@ public class UserSideSearch extends Activity {
     private void loadActivity() {
         // Do all of your work here
         list = (ListView) findViewById(R.id.listView);
-        offersList = new ArrayList<HashMap<String, String>>();
-        getData(); //get business email
+        bookList = new ArrayList<HashMap<String, String>>();
+        getData();
 
 
 
@@ -194,10 +209,10 @@ public class UserSideSearch extends Activity {
 
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
-            offers = jsonObj.getJSONArray(TAG_RESULTS);
+            books = jsonObj.getJSONArray(TAG_RESULTS);
 
-            for (int i = 0; i < offers.length(); i++) {
-                JSONObject c = offers.getJSONObject(i);
+            for (int i = 0; i < books.length(); i++) {
+                JSONObject c = books.getJSONObject(i);
                 String id = c.getString(TAG_ID);
                 String name = c.getString(TAG_NAME);
                 String author = c.getString(TAG_AUTHOR);
@@ -243,7 +258,7 @@ public class UserSideSearch extends Activity {
                 Context context = new Context(new OperationValidateEmail());
 
 
-                    if(name!=null && value!=null&& context.executeStrategy2(name, value).equals("true")|| author!=null && value!=null&&context.executeStrategy2(author, value).equals("true") || types!=null && types.equalsIgnoreCase("recent")&& date1.after(dateBefore30Days) || value != null&& value.equalsIgnoreCase(name) || value!=null && value.equalsIgnoreCase(author)|| str !=null && str.equalsIgnoreCase(name) || str!=null && str.equalsIgnoreCase(author) || str!=null && str.matches("name(.*)") ||str!=null&& str.matches("author(.*)") || types!=null && types.equalsIgnoreCase(type) ) {
+                    if(type!=null && value!=null && value.equalsIgnoreCase(type)|| name!=null && value!=null&& context.executeStrategy2(name, value).equals("true")|| author!=null && value!=null&&context.executeStrategy2(author, value).equals("true") || types!=null && types.equalsIgnoreCase("recent")&& date1.after(dateBefore30Days) || value != null&& value.equalsIgnoreCase(name) || value!=null && value.equalsIgnoreCase(author)|| str !=null && str.equalsIgnoreCase(name) || str!=null && str.equalsIgnoreCase(author) || str!=null && str.matches("name(.*)") ||str!=null&& str.matches("author(.*)") || types!=null && types.equalsIgnoreCase(type) ) {
                     HashMap<String, String> persons = new HashMap<String, String>();
                     persons.put(TAG_ID, id);
                     persons.put(TAG_NAME, name);
@@ -257,12 +272,12 @@ public class UserSideSearch extends Activity {
                     //    persons.put(TAG_DATE,d);
 
 
-                    offersList.add(persons);
+                    bookList.add(persons);
 
                 }
             }
             ListAdapter adapter = new SimpleAdapter(
-                    UserSideSearch.this, offersList, R.layout.book_list_item,
+                    UserSideSearch.this, bookList, R.layout.book_list_item,
                     new String[]{
                             TAG_DESCRIPTION,
                             TAG_NAME,
@@ -270,14 +285,14 @@ public class UserSideSearch extends Activity {
                             TAG_AUTHOR,
                     },
                     new int[]{
-                            R.id.author, R.id.title, R.id.type,R.id.author
+                            R.id.Price, R.id.title, R.id.type,R.id.Price
                     }
             );
 
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-                    Map<String, String> map = offersList.get(position);
+                    Map<String, String> map = bookList.get(position);
                     String link = map.get("id");
                     String title = map.get("title");
                     String author = map.get("author");
@@ -287,7 +302,6 @@ public class UserSideSearch extends Activity {
                     String type = map.get("type");
 
 
-                    String businessId = map.get("restaurant_id");
 
                     Toast.makeText(getApplicationContext(),
                             " " + title + " Clicked", Toast.LENGTH_SHORT).show();
@@ -322,15 +336,6 @@ public class UserSideSearch extends Activity {
 
     }
 
-    //  @Override
-    //  protected void onResume() {
-    //  super.onResume();
-
-    //  Intent intent = new Intent(BusinessSide.this , BusinessSide.class);
-    //  startActivity(intent);
-    //  finish();
-
-    //  }
     public void getData() {
         class GetDataJSON extends AsyncTask<String, Void, String> {
 
@@ -412,20 +417,38 @@ public class UserSideSearch extends Activity {
 
     @Override
     protected void onRestart() {
-        //   loadActivity();
-        //  Intent intent = new Intent(BusinessSide.this, BusinessSide.class);
-        // BusinessSide.this.startActivity(intent);
-        // finish();
+
         super.onRestart();
     }
+    private void doExit() {
 
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                UserSideSearch.this);
+
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = getIntent();
+
+                Intent intent = new Intent(UserSideSearch.this,MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        alertDialog.setNegativeButton("No", null);
+
+        alertDialog.setMessage("Are you sure you want to log out?");
+        alertDialog.show();
+
+
+    }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(UserSideSearch.this, UserSide.class);
-        intent.putExtra("type", "recent");
-        intent.putExtra("activity", "userSide");
-        intent.putExtra("user", username);
-        finish();
+      doExit();
     }
 
 }

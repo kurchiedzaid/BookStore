@@ -29,7 +29,6 @@
         <activity android:name=".AdminSide" />
         <activity android:name=".AddBook" />
         <activity android:name=".ViewBooks" />
-        <activity android:name=".Fiction" />
         <activity android:name=".BookDetails" />
         <activity android:name=".SearchDatabase" />
         <activity android:name=".RecentlyAdded" />
@@ -38,6 +37,9 @@
         <activity android:name=".Book_Details_customer" />
         <activity android:name=".Cart" />
         <activity android:name=".Transactions" />
+        <activity android:name=".AddReview" />
+        <activity android:name=".ViewReviews" />
+        <activity android:name=".CustDetails" />
 
         <activity
             android:name=".WelcomeAdmin"

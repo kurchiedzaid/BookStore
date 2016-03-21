@@ -48,9 +48,7 @@ public class MainActivity extends AppCompatActivity {
         // remove title
 
         setContentView(R.layout.activity_main);
-     //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        toolbar.setVisibility(View.GONE);
-//        setSupportActionBar(toolbar);
+
         Button login = (Button) findViewById(R.id.btnLinkToLoginScreen);
         login.setOnClickListener(new View.OnClickListener() {
             @Override

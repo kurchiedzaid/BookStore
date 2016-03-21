@@ -11,12 +11,13 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Stock Level"
-        android:id="@+id/textView" />
+        android:id="@+id/textView"
+        android:textColor="#ff8e00" />
 
     <EditText
         android:id="@+id/edittext"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter text here.."
+        android:hint="Stock Level"
         android:padding="10dp" />
 </LinearLayout>

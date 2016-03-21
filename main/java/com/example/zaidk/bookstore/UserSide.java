@@ -1,6 +1,8 @@
 package com.example.zaidk.bookstore;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -52,8 +54,8 @@ public class UserSide extends Activity {
     ImageButton sort;
 
     public String email="zaid";
-    JSONArray offers = null;
-    ArrayList<HashMap<String, String>> offersList;
+    JSONArray books = null;
+    ArrayList<HashMap<String, String>> bookList;
     TextView txt;
     ListView list;
     String phone;
@@ -88,9 +90,9 @@ public class UserSide extends Activity {
                         Log.v("EditText", search.getText().toString());
                         String value = search.getText().toString();
 
-                        GrammerCorrection ip=new GrammerCorrection();
+                        GrammerCorrection vt=new GrammerCorrection();
 
-                        String postfix = ip.conversion(value);
+                        String postfix = vt.conversion(value);
 //
                         System.out.println("Infix:   " + postfix);
                         System.out.println("UserName: " + username);
@@ -121,8 +123,8 @@ public class UserSide extends Activity {
     private void loadActivity() {
         // Do all of your work here
         list = (ListView) findViewById(R.id.listView);
-        offersList = new ArrayList<HashMap<String, String>>();
-        getData(); //get business email
+        bookList = new ArrayList<HashMap<String, String>>();
+        getData();
 
 
 
@@ -209,10 +211,10 @@ public class UserSide extends Activity {
 
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
-            offers = jsonObj.getJSONArray(TAG_RESULTS);
+            books = jsonObj.getJSONArray(TAG_RESULTS);
 
-            for (int i = 0; i < offers.length(); i++) {
-                JSONObject c = offers.getJSONObject(i);
+            for (int i = 0; i < books.length(); i++) {
+                JSONObject c = books.getJSONObject(i);
                 String id = c.getString(TAG_ID);
                 String name = c.getString(TAG_NAME);
                 String author = c.getString(TAG_AUTHOR);
@@ -237,12 +239,12 @@ public class UserSide extends Activity {
                 //    persons.put(TAG_DATE,d);
 
 
-                offersList.add(persons);
+                bookList.add(persons);
 
 
             }
             ListAdapter adapter = new SimpleAdapter(
-                    UserSide.this, offersList, R.layout.book_list_item,
+                    UserSide.this, bookList, R.layout.book_list_item,
                     new String[]{
                             TAG_DESCRIPTION,
                             TAG_NAME,
@@ -250,14 +252,14 @@ public class UserSide extends Activity {
                             TAG_AUTHOR,
                     },
                     new int[]{
-                            R.id.author, R.id.title, R.id.type,R.id.author
+                            R.id.Author, R.id.title, R.id.type,R.id.Price
                     }
             );
 
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-                    Map<String, String> map = offersList.get(position);
+                    Map<String, String> map = bookList.get(position);
                     String link = map.get("id");
                     String title = map.get("title");
                     String author = map.get("author");
@@ -267,7 +269,6 @@ public class UserSide extends Activity {
                     String type = map.get("type");
 
 
-                    String businessId = map.get("restaurant_id");
 
                     Toast.makeText(getApplicationContext(),
                             " " + title + " Clicked", Toast.LENGTH_SHORT).show();
@@ -300,15 +301,7 @@ public class UserSide extends Activity {
 
     }
 
-    //  @Override
-    //  protected void onResume() {
-    //  super.onResume();
 
-    //  Intent intent = new Intent(BusinessSide.this , BusinessSide.class);
-    //  startActivity(intent);
-    //  finish();
-
-    //  }
     public void getData() {
         class GetDataJSON extends AsyncTask<String, Void, String> {
 
@@ -389,19 +382,38 @@ public class UserSide extends Activity {
 
     @Override
     protected void onRestart() {
-        //   loadActivity();
-        //  Intent intent = new Intent(BusinessSide.this, BusinessSide.class);
-        // BusinessSide.this.startActivity(intent);
-        // finish();
+
         super.onRestart();
     }
 
+    private void doExit() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                UserSide.this);
+
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = getIntent();
+
+                Intent intent = new Intent(UserSide.this,MainActivity.class);
+
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        alertDialog.setNegativeButton("No", null);
+
+        alertDialog.setMessage("Are you sure you want to log out?");
+        alertDialog.show();
+
+
+    }
     @Override
     public void onBackPressed() {
-          Intent intent = new Intent(UserSide.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
+        doExit();
     }
 
 }

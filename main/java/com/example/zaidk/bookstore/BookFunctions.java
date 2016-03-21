@@ -1,18 +1,11 @@
 package com.example.zaidk.bookstore;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -36,7 +29,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by zaidkurchied on 08/03/2016.
@@ -66,8 +58,8 @@ public class BookFunctions extends Book {
     ImageButton sort;
 
     public String email="zaid";
-    JSONArray offers = null;
-    ArrayList<HashMap<String, String>> offersList;
+    JSONArray books = null;
+    ArrayList<HashMap<String, String>> booklist;
     TextView txt;
     ListView list;
 
@@ -107,7 +99,6 @@ public class BookFunctions extends Book {
       remove();
     }
 
-    //remove offer when invokeRemvoe is clicked using that offer id
     private void remove() {
 
         class LoginAsync extends AsyncTask < String, Void, String > {
@@ -173,7 +164,6 @@ public class BookFunctions extends Book {
 
     class SummaryAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
-        //  private void postData(String offerName,String offerType,String offerLocation,String offerDescription,String businessId,String businessEmail,String business_phone,String views) {
         private void postData(String title,String author, String price, String stock, String desc,String type) {
             System.out.println("book is being added inside" +price+author+title);
 
@@ -252,7 +242,6 @@ public class BookFunctions extends Book {
 
     class addToCart extends AsyncTask<Void, Void, Boolean> {
 
-        //  private void postData(String offerName,String offerType,String offerLocation,String offerDescription,String businessId,String businessEmail,String business_phone,String views) {
         private void postData(String userName,String bookId,String price) {
             System.out.println("book is being added inside" +price+author+title);
 
@@ -289,9 +278,7 @@ public class BookFunctions extends Book {
 
     class transaction extends AsyncTask<Void, Void, Boolean> {
 
-        //  private void postData(String offerName,String offerType,String offerLocation,String offerDescription,String businessId,String businessEmail,String business_phone,String views) {
         private void postData(String userName,String bookId,String price) {
-            System.out.println("book is being added inside" +price+author+title);
 
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost("http://10.0.2.2/info/transaction.php");
@@ -316,7 +303,6 @@ public class BookFunctions extends Book {
         protected Boolean doInBackground(Void... params) {
             postData(userName,id,price);
 
-            System.out.println("post data" + userName+id+price);
 
             return null;
 
@@ -327,10 +313,10 @@ public class BookFunctions extends Book {
 
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
-            offers = jsonObj.getJSONArray(TAG_RESULTS);
+            books = jsonObj.getJSONArray(TAG_RESULTS);
 
-            for (int i = 0; i < offers.length(); i++) {
-                JSONObject c = offers.getJSONObject(i);
+            for (int i = 0; i < books.length(); i++) {
+                JSONObject c = books.getJSONObject(i);
                 String idd = c.getString(TAG_ID);
                 String name = c.getString(TAG_NAME);
                 String author = c.getString(TAG_AUTHOR);

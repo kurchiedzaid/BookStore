@@ -27,28 +27,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Large Text"
+                android:text="New User"
                 android:id="@+id/textView3"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:textColor="#ff8e00" />
 
             <EditText
                 android:id="@+id/name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="#6ac86a"
+                android:background="#ff8e00"
                 android:hint="Name"
                 android:padding="5dp"
                 android:singleLine="true"
                 android:inputType="textCapWords"
-               />
+                android:autoText="false" />
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="#6ac86a"
+                android:background="#ff8e00"
                 android:hint="password"
                 android:inputType="textPassword"
                 android:padding="5dp"
@@ -61,7 +62,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="#6ac86a"
+                android:background="#ff8e00"
                 android:hint="Repeat password"
                 android:inputType="textPassword"
                 android:padding="5dp"
@@ -72,7 +73,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="#6ac86a"
+                android:background="#ff8e00"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:padding="5dp"
@@ -84,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="#6ac86a"
+                android:background="#ff8e00"
                 android:hint="Address"
                 android:padding="5dp"
                 android:singleLine="true"
@@ -95,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="#6ac86a"
+                android:background="#ff8e00"
                 android:hint="Country"
                 android:inputType="text"
                 android:padding="5dp"
@@ -112,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="#6ac86a"
+                android:background="#ff8e00"
                 android:hint="Tel"
                 android:padding="5dp"
                 android:singleLine="true"
@@ -129,7 +130,8 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Payment Method"
                     android:id="@+id/textView2"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="#ff8e00" />
                 <RadioGroup
                     android:id="@+id/radioSex"
                     android:layout_width="wrap_content"
@@ -141,7 +143,8 @@
                     android:text="In store"
                     android:id="@+id/radioButton2"
                     android:layout_gravity="center_horizontal"
-                    android:checked="false" />
+                    android:checked="false"
+                    android:textColor="#ff8e00" />
 
                 <RadioButton
                     android:layout_width="match_parent"
@@ -149,7 +152,8 @@
                     android:text="Visa Card"
                     android:id="@+id/radioButton"
                     android:checked="false"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="#ff8e00" />
 
                 <RadioButton
                     android:layout_width="match_parent"
@@ -157,7 +161,8 @@
                     android:text="Master Card"
                     android:id="@+id/radioButton3"
                     android:layout_gravity="center_horizontal"
-                    android:checked="false" />
+                    android:checked="false"
+                    android:textColor="#ff8e00" />
                 </RadioGroup>
             </LinearLayout>
 
@@ -166,7 +171,7 @@
                 android:layout_width="126dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dip"
-                android:background="#ea4c88"
+                android:background="#ff8e00"
                 android:text="Register"
                 android:layout_gravity="center_horizontal"
                 android:clickable="true" />

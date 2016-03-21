@@ -52,8 +52,8 @@ public class SearchDatabase extends Activity {
     ImageButton sort;
 
     public String email="zaid";
-    JSONArray offers = null;
-    ArrayList<HashMap<String, String>> offersList;
+    JSONArray books = null;
+    ArrayList<HashMap<String, String>> bookList;
     TextView txt;
     ListView list;
     String phone;
@@ -94,8 +94,8 @@ public class SearchDatabase extends Activity {
     private void loadActivity() {
         // Do all of your work here
         list = (ListView) findViewById(R.id.listView);
-        offersList = new ArrayList<HashMap<String, String>>();
-        getData(); //get business email
+        bookList = new ArrayList<HashMap<String, String>>();
+        getData();
 
 
 
@@ -171,10 +171,10 @@ public class SearchDatabase extends Activity {
 
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
-            offers = jsonObj.getJSONArray(TAG_RESULTS);
+            books = jsonObj.getJSONArray(TAG_RESULTS);
 
-            for (int i = 0; i < offers.length(); i++) {
-                JSONObject c = offers.getJSONObject(i);
+            for (int i = 0; i < books.length(); i++) {
+                JSONObject c = books.getJSONObject(i);
                 String id = c.getString(TAG_ID);
                 String name = c.getString(TAG_NAME);
                 String author = c.getString(TAG_AUTHOR);
@@ -187,25 +187,25 @@ public class SearchDatabase extends Activity {
                 String value = intent.getStringExtra("value");
                 String  str = value.substring(0, value.length() - 1);
                 if(value.equalsIgnoreCase(name) || value.equalsIgnoreCase(author)||str.equalsIgnoreCase(name) || str.equalsIgnoreCase(author) ||str.matches("name(.*)") || str.matches("author(.*)") ) {
-    HashMap<String, String> persons = new HashMap<String, String>();
-    persons.put(TAG_ID, id);
-    persons.put(TAG_NAME, name);
-    persons.put(TAG_AUTHOR, author);
-    persons.put(TAG_DESCRIPTION, description);
-    persons.put(TAG_PRICE, price);
-    persons.put(TAG_STOCK, stock);
-    persons.put(TAG_TYPE, type);
+                    HashMap<String, String> persons = new HashMap<String, String>();
+                    persons.put(TAG_ID, id);
+                    persons.put(TAG_NAME, name);
+                    persons.put(TAG_AUTHOR, author);
+                    persons.put(TAG_DESCRIPTION, description);
+                    persons.put(TAG_PRICE, price);
+                    persons.put(TAG_STOCK, stock);
+                    persons.put(TAG_TYPE, type);
 
 
     //    persons.put(TAG_DATE,d);
 
 
-    offersList.add(persons);
+    bookList.add(persons);
 
 }
             }
             ListAdapter adapter = new SimpleAdapter(
-                    SearchDatabase.this, offersList, R.layout.book_list_item,
+                    SearchDatabase.this, bookList, R.layout.book_list_item,
                     new String[]{
                             TAG_DESCRIPTION,
                             TAG_NAME,
@@ -213,14 +213,14 @@ public class SearchDatabase extends Activity {
                             TAG_AUTHOR,
                     },
                     new int[]{
-                            R.id.author, R.id.title, R.id.type,R.id.author
+                            R.id.Author, R.id.title, R.id.type,R.id.Price
                     }
             );
 
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-                    Map<String, String> map = offersList.get(position);
+                    Map<String, String> map = bookList.get(position);
                     String link = map.get("id");
                     String title = map.get("title");
                     String author = map.get("author");
@@ -230,7 +230,6 @@ public class SearchDatabase extends Activity {
                     String type = map.get("type");
 
 
-                    String businessId = map.get("restaurant_id");
 
                     Toast.makeText(getApplicationContext(),
                             " " + title + " Clicked", Toast.LENGTH_SHORT).show();
@@ -261,15 +260,7 @@ public class SearchDatabase extends Activity {
 
     }
 
-    //  @Override
-    //  protected void onResume() {
-    //  super.onResume();
 
-    //  Intent intent = new Intent(BusinessSide.this , BusinessSide.class);
-    //  startActivity(intent);
-    //  finish();
-
-    //  }
     public void getData() {
         class GetDataJSON extends AsyncTask<String, Void, String> {
 
@@ -351,10 +342,7 @@ public class SearchDatabase extends Activity {
 
     @Override
     protected void onRestart() {
-        //   loadActivity();
-        //  Intent intent = new Intent(BusinessSide.this, BusinessSide.class);
-        // BusinessSide.this.startActivity(intent);
-        // finish();
+
         super.onRestart();
     }
 

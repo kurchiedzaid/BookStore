@@ -15,60 +15,70 @@
 
         <ImageView
             android:id="@+id/list_image"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:src="@drawable/euro"/>
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:src="@drawable/bkre"/>
 
     </LinearLayout>
 
     <!-- Title Of Song-->
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
-        android:singleLine="true"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="food"
+        android:text="Rihanna Love the way lie"
         android:textColor="#040404"
         android:typeface="sans"
         android:textSize="15dip"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:singleLine="true"
+        />
 
     <!-- Artist Name -->
     <TextView
-        android:id="@+id/Price"
-        android:layout_width="wrap_content"
+        android:id="@+id/id"
+        android:layout_width="255dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/name"
         android:textColor="#343434"
-        android:singleLine="true"
         android:textSize="10dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
         android:text="Just gona stand there and ..."
-        android:layout_alignLeft="@+id/title"
-        android:layout_alignStart="@+id/title"
-        android:layout_below="@+id/title" />
+        android:singleLine="true"
+        />
 
 
 
     <!-- Rightend Duration -->
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="5:45"
+        android:textSize="10dip"
+        android:textColor="#10bcc9"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/thumbnail" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView3"
+        android:src="@drawable/bkre"
+        android:layout_alignTop="@+id/id"
+        android:layout_alignLeft="@+id/address"
+        android:layout_alignStart="@+id/address"
+        android:layout_alignBottom="@+id/id"
+        android:layout_alignRight="@+id/address"
+        android:layout_alignEnd="@+id/address" />
 
     <!-- Rightend Arrow -->
-    <ImageView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/imageView6" />
-
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:textColor="#343434"
-        android:singleLine="true"
-        android:textSize="10dip"
-        android:text="Author"
-        android:layout_alignLeft="@+id/Price"
-        android:layout_alignStart="@+id/Price"
-        android:layout_alignBottom="@+id/thumbnail" />
 
 </RelativeLayout>
